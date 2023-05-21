@@ -1,5 +1,6 @@
 import * as React from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import PersonProp from './person';
 
@@ -20,10 +21,12 @@ function PersonList() {
     return (
         <>
             {data.map(p => (
-            <PersonProp
-                firstName={p.firstName} 
-                lastName={p.lastName} 
-                email={p.email} />
+                <Link to={`/person/${p.id}`} id={p.key}>
+                    <PersonProp
+                        firstName={p.firstName}
+                        lastName={p.lastName}
+                        email={p.email} />
+                </Link>
             ))}
         </>
     )
