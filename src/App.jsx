@@ -47,7 +47,7 @@ function Person() {
       const personResult = await axios(GET_P);
       const reviewResult = await axios(GET_R);
       const movieResult = await axios(GET_M);
-      
+
       setGenreData(favGenreResult.data);
       setPersonData(personResult.data);
       setReviewData(reviewResult.data);
@@ -64,45 +64,45 @@ function Person() {
 
   return genreData && personData && reiviewData && movieData ? (
     <>
-        {personData.map((person) => (
-          <div key={person.id}>
-            <h2>{person.firstName}'s favourite genres:</h2>
-          </div>
-        ))}
-        
-        {genreData.map((genre) => (
-          <div key={genre.id}>
-            <h2></h2>
-            <h5>{genre.name} - {genre.description}</h5>
-          </div>
-        ))}
-        
-        {personData.map((person) => (
-          <div key={person.id}>
-            <h2>{person.firstName}'s movie reviews:</h2>
-          </div>
-        ))}
+      {personData.map((person) => (
+        <div key={person.id}>
+          <h2>{person.firstName}'s favourite genres:</h2>
+        </div>
+      ))}
 
-        {reiviewData.map((r) => (
-          <div key={r.id}>
-            <h4>{r.movieName} - {r.rating}/10</h4>
-            <h5>Their thoughts: {r.review}</h5>
-          </div>
-        ))}
+      {genreData.map((genre) => (
+        <div key={genre.id}>
+          <h2></h2>
+          <h5>{genre.name} - {genre.description}</h5>
+        </div>
+      ))}
 
-        {personData.map((person) => (
-          <div key={person.id}>
-            <h2>{person.firstName}'s published movies:</h2>
-          </div>
-        ))}
+      {personData.map((person) => (
+        <div key={person.id}>
+          <h2>{person.firstName}'s movie reviews:</h2>
+        </div>
+      ))}
 
-        {movieData.map((m) => (
-          <div>
-            <h4>{m.name} - {m.link}</h4>
-            <h5>Genres: {m.movieGenre}</h5> {/* didnt think through genres for a movie
+      {reiviewData.map((r) => (
+        <div key={r.id}>
+          <h4>{r.movieName} - {r.rating}/10</h4>
+          <h5>Their thoughts: {r.review}</h5>
+        </div>
+      ))}
+
+      {personData.map((person) => (
+        <div key={person.id}>
+          <h2>{person.firstName}'s published movies:</h2>
+        </div>
+      ))}
+
+      {movieData.map((m) => (
+        <div>
+          <h4>{m.name} - {m.link}</h4>
+          <h5>Genres: {m.movieGenre}</h5> {/* didnt think through genres for a movie
             in my db */}
-          </div>
-        ))}
+        </div>
+      ))}
     </>
   ) : (
     <h3>Loading data for id: {personId}</h3>
