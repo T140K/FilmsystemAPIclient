@@ -27,28 +27,42 @@ const FavGenre = styled.nav`
 `;
 
 function Person() {
+
   const [genreData, setGenreData] = React.useState(false);
   const [personData, setPersonData] = React.useState(false);
-  console.log(genreData)
+  const [reiviewData, setReviewData] = React.useState(false);
+  const [movieData, setMovieData] = React.useState(false);
+
+  //console.log(genreData)
 
   let { personId } = useParams();
   const GET_P_FAVGENRE = `https://localhost:7130/api/FavGenre/GetGenresByPersonId/${personId}`;
   const GET_P = `https://localhost:7130/api/Person/GetPersonById/${personId}`;
+  const GET_R = `https://localhost:7130/api/MovieReview/GetReviewByPersonId/${personId}`;
+  const GET_M = `https://localhost:7130/api/Movie/GetMovieByPersonId/${personId}`;
+
   React.useEffect(() => {
     const fetchData = async () => {
       const favGenreResult = await axios(GET_P_FAVGENRE);
       const personResult = await axios(GET_P);
-      console.log(favGenreResult);
-      //console.log(personResult);
+      const reviewResult = await axios(GET_R);
+      const movieResult = await axios(GET_M);
+      
       setGenreData(favGenreResult.data);
       setPersonData(personResult.data);
-      console.log(personResult)
+      setReviewData(reviewResult.data);
+      setMovieData(movieResult.data);
+
+      //console.log(favGenreResult);
+      //console.log(personResult);
+      //console.log(reviewResult);
+      console.log(movieResult);
     };
 
     fetchData();
   }, []);
 
-  return genreData && personData ? (
+  return genreData && personData && reiviewData && movieData ? (
     <>
         {personData.map((person) => (
           <div key={person.id}>
@@ -58,7 +72,35 @@ function Person() {
         
         {genreData.map((genre) => (
           <div key={genre.id}>
+            <h2></h2>
             <h5>{genre.name} - {genre.description}</h5>
+          </div>
+        ))}
+        
+        {personData.map((person) => (
+          <div key={person.id}>
+            <h2>{person.firstName}'s movie reviews:</h2>
+          </div>
+        ))}
+
+        {reiviewData.map((r) => (
+          <div key={r.id}>
+            <h4>{r.movieName} - {r.rating}/10</h4>
+            <h5>Their thoughts: {r.review}</h5>
+          </div>
+        ))}
+
+        {personData.map((person) => (
+          <div key={person.id}>
+            <h2>{person.firstName}'s published movies:</h2>
+          </div>
+        ))}
+
+        {movieData.map((m) => (
+          <div>
+            <h4>{m.name} - {m.link}</h4>
+            <h5>Genres: {m.movieGenre}</h5> {/* didnt think through genres for a movie
+            in my db */}
           </div>
         ))}
     </>
