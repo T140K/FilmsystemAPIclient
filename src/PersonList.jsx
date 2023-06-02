@@ -2,7 +2,7 @@ import * as React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-import PersonProp from './person';
+import PersonProp from './PersonProp';
 
 const GET_PEOPLE = "https://localhost:7130/api/Person/GetPeople"
 
