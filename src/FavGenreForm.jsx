@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-function Form({ updateGenreData }) {
+function FavGenreForm({ updateGenreData }) {
     const { personId } = useParams();
 
     const [genre, setGenre] = React.useState('');
@@ -72,4 +72,4 @@ function Form({ updateGenreData }) {
     );
 }
 
-export default Form;
+export default FavGenreForm;

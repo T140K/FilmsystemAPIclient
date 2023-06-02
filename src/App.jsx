@@ -11,7 +11,8 @@ import {
 } from "react-router-dom";
 
 import PersonList from './PersonList';
-import Form from './FavGenreForm';
+import FavGenreForm from './FavGenreForm';
+import MovieReviewForm from './MovieReviewForm';
 
 const MainContainer = styled.main`
   width: 100%;
@@ -46,6 +47,10 @@ function Person() {
     setGenreData(newGenreData);
   };
 
+  const updateMovieReviewData = (newMovieReviewData) => {
+    setReviewData(newMovieReviewData);
+  };
+
   React.useEffect(() => {
     const fetchData = async () => {
       const favGenreResult = await axios(GET_P_FAVGENRE);
@@ -75,7 +80,7 @@ function Person() {
             </div>
           ))}
 
-          <Form updateGenreData={updateGenreData}/>
+          <FavGenreForm updateGenreData={updateGenreData}/>
 
           <h2>{person.firstName}'s movie reviews:</h2>
           {reiviewData.map((rating) => (
@@ -85,11 +90,13 @@ function Person() {
             </div>
           ))}
 
+          <MovieReviewForm updateMovieReviewData={updateMovieReviewData}/>
+
           <h2>{person.firstName}'s published movies:</h2>
           {movieData.map((movies) => (
             <div>
               <h4>{movies.name} - {movies.link}</h4>
-              <h4>Genres: {movies.movieGenre}</h4> {/* didnt think through genres for a movie
+              <h4>Genres: {movies.movieGenre}</h4> {/* didnt think through genres for a movies
             in my db */}
             </div>
           ))}
