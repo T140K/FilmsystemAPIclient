@@ -2,24 +2,32 @@ import React from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-function FavGenreForm({ updateGenreData }) {
+function AddMovieForm({ updateMoviesData }) {
     let { personId } = useParams();
 
+    const [movieName, setMovieName] = React.useState('');
+    const [movieLink, setMovieLink] = React.useState('');
     const [genre, setGenre] = React.useState('');
     const [genreData, setGenreData] = React.useState([]);
 
+    const POST_NEWMOVIE = `https://localhost:7130/api/Movie/AddNewMovie/${movieName}/${movieLink}/${genre}/${personId}`;
+    const GET_PUBLISHED_MOVIES = `https://localhost:7130/api/Movie/GetMovieByPersonId/${personId}`;
     const GET_GENRE = "https://localhost:7130/api/Genres/GetGenres";
-    const GET_P_FAVGENRE = `https://localhost:7130/api/FavGenre/GetGenresByPersonId/${personId}`;
 
+    const handleNameChange = (evt) => {
+        setMovieName(evt.target.value);
+    };
+    const handleLinkChange = (evt) => {
+        setMovieLink(evt.target.value);
+    };
     const handleGenreChange = (evt) => {
-        console.log(evt.target.value);
         setGenre(evt.target.value);
     };
-
     const handleSubmit = (evt) => {
         evt.preventDefault();
         console.log(evt);
     };
+
 
     React.useEffect(() => {
         const fetchData = async () => {
@@ -38,14 +46,14 @@ function FavGenreForm({ updateGenreData }) {
         e.preventDefault();
 
         axios
-            .post(`https://localhost:7130/api/FavGenre/AddFavGenre/${personId}/${genre}`)
+            .post(`https://localhost:7130/api/Movie/AddNewMovie/${movieName}/${movieLink}/${genre}/${personId}`)
             .then((res) => {
                 console.log('Posting data:', res);
 
-                axios(GET_P_FAVGENRE)
-                    .then((favGenreResult) => {
-                        const newGenreData = favGenreResult.data;
-                        updateGenreData(newGenreData);
+                axios(GET_PUBLISHED_MOVIES)
+                    .then((movieResult) => {
+                        const newMovieData = movieResult.data;
+                        updateMoviesData(newMovieData);
                     })
             })
             .catch((err) => console.log(err));
@@ -54,8 +62,24 @@ function FavGenreForm({ updateGenreData }) {
     return (
         <>
             <form onSubmit={handleSubmit}>
+                Add a new movie:
                 <label>
-                    Add a new favorite genre
+                    <input
+                        placeholder='movie name'
+                        type="text"
+                        value={movieName}
+                        onChange={handleNameChange}
+                    />
+
+                    movie link:
+                    <input
+                        placeholder='movie link'
+                        type="text"
+                        value={movieLink}
+                        onChange={handleLinkChange}
+                    />
+
+                    movie genre
                     <select value={genre} onChange={handleGenreChange}>
                         <option value=""> - Please select a genre -</option>
                         {genreData.map((genre) => (
@@ -69,7 +93,7 @@ function FavGenreForm({ updateGenreData }) {
                 <button onClick={postData} type="submit">SEND</button>
             </form>
         </>
-    );
+    )
 }
 
-export default FavGenreForm;
+export default AddMovieForm

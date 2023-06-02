@@ -13,6 +13,7 @@ import {
 import PersonList from './PersonList';
 import FavGenreForm from './FavGenreForm';
 import MovieReviewForm from './MovieReviewForm';
+import AddMovieForm from './AddMovieForm';
 
 const MainContainer = styled.main`
   width: 100%;
@@ -50,6 +51,11 @@ function Person() {
   const updateMovieReviewData = (newMovieReviewData) => {
     setReviewData(newMovieReviewData);
   };
+
+  const updateMoviesData = (newupdateMoviesData) => {
+    setMovieData(newupdateMoviesData);
+  };
+  
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -100,6 +106,8 @@ function Person() {
             in my db */}
             </div>
           ))}
+
+          <AddMovieForm updateMoviesData={updateMoviesData}/>
         </div>
       ))}
     </>
